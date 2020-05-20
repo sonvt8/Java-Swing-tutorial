@@ -21,6 +21,8 @@ public class MainFrame extends JFrame{
 		btn = new JButton("Click Me!");
 		toolbar = new Toolbar();
 		
+		toolbar.setTextPanel(txtPanel);
+		
 		btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				txtPanel.appendText("Hello\n");
