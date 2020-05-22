@@ -17,9 +17,9 @@ public class MainFrame extends JFrame{
 		
 		setLayout(new BorderLayout());
 		
-		txtPanel = new TextPanel();
 		toolbar = new Toolbar();
 		formPanel = new FormPanel();
+		txtPanel = new TextPanel();
 		
 		toolbar.setStringListener(new StringListener() {
 			
