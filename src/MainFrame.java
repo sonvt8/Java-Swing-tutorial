@@ -9,8 +9,8 @@ import javax.swing.JTextArea;
 public class MainFrame extends JFrame{
 	
 	private TextPanel txtPanel;
-	private JButton btn;
 	private Toolbar toolbar;
+	private FormPanel formPanel;
 	
 	public MainFrame() {
 		super("Hello World");
@@ -18,8 +18,8 @@ public class MainFrame extends JFrame{
 		setLayout(new BorderLayout());
 		
 		txtPanel = new TextPanel();
-		btn = new JButton("Click Me!");
 		toolbar = new Toolbar();
+		formPanel = new FormPanel();
 		
 		toolbar.setStringListener(new StringListener() {
 			
@@ -29,15 +29,9 @@ public class MainFrame extends JFrame{
 			}
 		});;
 		
-		btn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				txtPanel.appendText("Hello\n");
-			}
-		});
-		
 		add(txtPanel, BorderLayout.CENTER);
-		add(btn, BorderLayout.SOUTH);
 		add(toolbar, BorderLayout.NORTH);
+		add(formPanel, BorderLayout.WEST);
 		
 		setSize(600, 500);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
