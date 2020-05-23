@@ -33,13 +33,13 @@ public class FormPanel extends JPanel {
 		
 		GridBagConstraints gc = new GridBagConstraints();
 		
+//		This form just have one column, therefore we just use weighty to allocate the space between each components
+		
 		/////////////// FIRST ROW ///////////////////
-		gc.weightx = 1;
-		gc.weighty = 0.1;
+		gc.weighty = 0.1; // assign at least small additional space between each component on Vertical
 		
 		gc.gridx = 0;
 		gc.gridy = 0;
-		gc.fill = GridBagConstraints.NONE;
 		gc.anchor = GridBagConstraints.LINE_END;
 		gc.insets = new Insets(0, 0, 0, 5);
 		add(nameLabel,gc);
@@ -50,9 +50,6 @@ public class FormPanel extends JPanel {
 		add(nameField, gc);
 		
 		/////////////// SECOND ROW ///////////////////
-		gc.weightx = 1;
-		gc.weighty = 0.1;
-		
 		gc.gridy = 1;
 		gc.gridx = 0;
 		gc.anchor = GridBagConstraints.LINE_END;
@@ -65,8 +62,7 @@ public class FormPanel extends JPanel {
 		add(occupationField,gc);
 		
 		/////////////// THIRD ROW ///////////////////
-		gc.weightx = 1;
-		gc.weighty = 2;
+		gc.weighty = 2; //all additional space below will be distributed to this component on Vertical
 		
 		gc.gridy = 2;
 		gc.gridx = 1;
