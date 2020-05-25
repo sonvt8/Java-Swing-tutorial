@@ -2,17 +2,24 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.Border;
 
-public class FormPanel extends JPanel {
+public class FormPanel extends JPanel{
 	
 	private JLabel nameLabel;
 	private JLabel occupationLabel;
 	private JTextField nameField;
 	private JTextField occupationField;
 	private JButton okBtn;
+	private FormListener formListener;
 	
 	public FormPanel() {
 		Dimension dim = getPreferredSize();
@@ -24,6 +31,19 @@ public class FormPanel extends JPanel {
 		nameField = new JTextField(10);
 		occupationField = new JTextField(10);
 		okBtn = new JButton("Submit");
+		
+		okBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String name = nameField.getText();
+				String occupation = occupationField.getText();
+				
+				var ev = new FormEvent(this, name, occupation);
+				
+				if(formListener != null) {
+					formListener.formEventOccured(ev);
+				}
+			}
+		});
 		
 		Border innerBorder = BorderFactory.createTitledBorder("Add Person");
 		Border outerBorder = BorderFactory.createEmptyBorder(5,5,5,5);
@@ -68,5 +88,11 @@ public class FormPanel extends JPanel {
 		gc.gridx = 1;
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		add(okBtn,gc);
+		
+//		End of Edit Form
+	}
+	
+	public void setFormListener (FormListener listener) {
+		this.formListener = listener;
 	}
 }
