@@ -6,8 +6,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
@@ -20,6 +22,7 @@ public class FormPanel extends JPanel{
 	private JTextField occupationField;
 	private JButton okBtn;
 	private FormListener formListener;
+	private JList ageList;
 	
 	public FormPanel() {
 		Dimension dim = getPreferredSize();
@@ -30,14 +33,28 @@ public class FormPanel extends JPanel{
 		occupationLabel = new JLabel("Occupation: ");
 		nameField = new JTextField(10);
 		occupationField = new JTextField(10);
+		ageList = new JList();
+		
+		DefaultListModel ageModel = new DefaultListModel();
+		ageModel.addElement(new AgeCategory(0,"18 or under"));
+		ageModel.addElement(new AgeCategory(1,"18 to 65"));
+		ageModel.addElement(new AgeCategory(2,"65 or over"));
+		ageList.setModel(ageModel);
+		
+		ageList.setPreferredSize(new Dimension(93,60));
+		ageList.setBorder(BorderFactory.createEtchedBorder());
+		
 		okBtn = new JButton("Submit");
 		
 		okBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String name = nameField.getText();
 				String occupation = occupationField.getText();
+				AgeCategory ageCat = (AgeCategory) ageList.getSelectedValue();
 				
-				var ev = new FormEvent(this, name, occupation);
+				var ev = new FormEvent(this, name, occupation, ageCat.getIdSelected());
+				
+				System.out.println(ageCat);
 				
 				if(formListener != null) {
 					formListener.formEventOccured(ev);
@@ -82,9 +99,15 @@ public class FormPanel extends JPanel{
 		add(occupationField,gc);
 		
 		/////////////// THIRD ROW ///////////////////
+		gc.gridy = 2;
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		add(ageList,gc);
+		
+		/////////////// FOURTH ROW ///////////////////
 		gc.weighty = 2; //all additional space below will be distributed to this component on Vertical
 		
-		gc.gridy = 2;
+		gc.gridy = 3;
 		gc.gridx = 1;
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		add(okBtn,gc);
@@ -95,4 +118,37 @@ public class FormPanel extends JPanel{
 	public void setFormListener (FormListener listener) {
 		this.formListener = listener;
 	}
+}
+
+class AgeCategory {
+	private int idSelected;
+	private String text;
+	
+	public AgeCategory(int idSelected, String text) {
+		this.idSelected = idSelected;
+		this.text = text;
+	}
+
+	public int getIdSelected() {
+		return idSelected;
+	}
+
+	public void setIdSelected(int idSelected) {
+		this.idSelected = idSelected;
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
+	@Override
+	public String toString() {
+		return text;
+	}
+	
+	
 }
