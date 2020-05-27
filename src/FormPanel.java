@@ -6,8 +6,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -23,6 +25,7 @@ public class FormPanel extends JPanel{
 	private JButton okBtn;
 	private FormListener formListener;
 	private JList ageList;
+	private JComboBox empCombo;
 	
 	public FormPanel() {
 		Dimension dim = getPreferredSize();
@@ -34,15 +37,27 @@ public class FormPanel extends JPanel{
 		nameField = new JTextField(10);
 		occupationField = new JTextField(10);
 		ageList = new JList();
+		empCombo = new JComboBox();
 		
+//		List Model
 		DefaultListModel ageModel = new DefaultListModel();
 		ageModel.addElement(new AgeCategory(0,"18 or under"));
 		ageModel.addElement(new AgeCategory(1,"18 to 65"));
 		ageModel.addElement(new AgeCategory(2,"65 or over"));
 		ageList.setModel(ageModel);
+		ageList.setSelectedIndex(1);
 		
 		ageList.setPreferredSize(new Dimension(93,60));
 		ageList.setBorder(BorderFactory.createEtchedBorder());
+		
+//		Combobox Model
+		DefaultComboBoxModel empModel = new DefaultComboBoxModel();
+		empModel.addElement("employed");
+		empModel.addElement("self-employed");
+		empModel.addElement("unemployed");
+		empCombo.setModel(empModel);
+		empCombo.setSelectedIndex(0);
+		empCombo.setEditable(true);
 		
 		okBtn = new JButton("Submit");
 		
@@ -51,10 +66,11 @@ public class FormPanel extends JPanel{
 				String name = nameField.getText();
 				String occupation = occupationField.getText();
 				AgeCategory ageCat = (AgeCategory) ageList.getSelectedValue();
+				String empCat = (String) empCombo.getSelectedItem();
 				
-				var ev = new FormEvent(this, name, occupation, ageCat.getIdSelected());
+				System.out.println(empCat);
 				
-				System.out.println(ageCat);
+				var ev = new FormEvent(this, name, occupation, ageCat.getIdSelected(), empCat);
 				
 				if(formListener != null) {
 					formListener.formEventOccured(ev);
@@ -66,6 +82,10 @@ public class FormPanel extends JPanel{
 		Border outerBorder = BorderFactory.createEmptyBorder(5,5,5,5);
 		setBorder(BorderFactory.createCompoundBorder(outerBorder,innerBorder));
 		
+		layoutComponents();
+	}
+	
+	public void layoutComponents() {
 		setLayout(new GridBagLayout());
 		
 		GridBagConstraints gc = new GridBagConstraints();
@@ -87,7 +107,7 @@ public class FormPanel extends JPanel{
 		add(nameField, gc);
 		
 		/////////////// SECOND ROW ///////////////////
-		gc.gridy = 1;
+		gc.gridy++;
 		gc.gridx = 0;
 		gc.anchor = GridBagConstraints.LINE_END;
 		gc.insets = new Insets(0, 0, 0, 5);
@@ -99,15 +119,33 @@ public class FormPanel extends JPanel{
 		add(occupationField,gc);
 		
 		/////////////// THIRD ROW ///////////////////
-		gc.gridy = 2;
+		gc.gridy++;
+		
+		gc.gridx = 0;
+		gc.anchor = GridBagConstraints.FIRST_LINE_END;
+		gc.insets = new Insets(0, 0, 0, 5);
+		add(new JLabel("Age: "),gc);
+		
 		gc.gridx = 1;
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		add(ageList,gc);
 		
 		/////////////// FOURTH ROW ///////////////////
+		gc.gridy++;
+		
+		gc.gridx = 0;
+		gc.anchor = GridBagConstraints.FIRST_LINE_END;
+		gc.insets = new Insets(0, 0, 0, 5);
+		add(new JLabel("Employment: "),gc);
+		
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		add(empCombo,gc);
+		
+		/////////////// FIFTH ROW ///////////////////
 		gc.weighty = 2; //all additional space below will be distributed to this component on Vertical
 		
-		gc.gridy = 3;
+		gc.gridy++;
 		gc.gridx = 1;
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		add(okBtn,gc);

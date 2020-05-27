@@ -33,8 +33,9 @@ public class MainFrame extends JFrame{
 				String name = e.getName();
 				String occupation = e.getOccupation();
 				int idCategory = e.getidCategory();
+				String empCat = e.getEmploymentCategory();
 				
-				txtPanel.appendText(name + ": " + occupation + ": " + idCategory + "\n");
+				txtPanel.appendText(name + ": " + occupation + ": " + idCategory + ": " + empCat + "\n");
 			}
 		});
 		
