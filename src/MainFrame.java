@@ -31,6 +31,7 @@ public class MainFrame extends JFrame{
 		formPanel = new FormPanel();
 		txtPanel = new TextPanel();
 		fileChooser = new JFileChooser();
+		fileChooser.addChoosableFileFilter(new PersonFileFilter());
 		
 		setJMenuBar(createMenuBar());
 		
