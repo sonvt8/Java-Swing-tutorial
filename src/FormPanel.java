@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -15,6 +16,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
@@ -29,6 +31,9 @@ public class FormPanel extends JPanel{
 	private JCheckBox citizenCheck;
 	private JTextField taxField;
 	private JLabel taxLabel;
+	private JRadioButton maleRadio;
+	private JRadioButton femaleRadio;
+	private ButtonGroup genderGroup;
 	
 	public FormPanel() {
 		Dimension dim = getPreferredSize();
@@ -42,8 +47,19 @@ public class FormPanel extends JPanel{
 		citizenCheck = new JCheckBox();
 		taxField = new JTextField(10);
 		taxLabel = new JLabel("Tax ID: ");
+		maleRadio = new JRadioButton("male");
+		femaleRadio = new JRadioButton("female");
+		genderGroup = new ButtonGroup();
 		
-//		Tax ID
+//		Radio Button
+		maleRadio.setSelected(true);
+		genderGroup.add(maleRadio);
+		genderGroup.add(femaleRadio);
+//		using ButtonGroup to ensure that only one values chosen at one time
+		maleRadio.setActionCommand("male");
+		femaleRadio.setActionCommand("female");
+		
+//		Check Box
 		taxLabel.setEnabled(false);
 		taxField.setEnabled(false);
 		
@@ -86,9 +102,9 @@ public class FormPanel extends JPanel{
 				String taxId = taxField.getText();
 				boolean vnCitizen = citizenCheck.isSelected();
 				
-				System.out.println(empCat);
-				
-				var ev = new FormEvent(this, name, occupation, ageCat.getIdSelected(), empCat, taxId, vnCitizen);
+				String gender = genderGroup.getSelection().getActionCommand();
+			
+				var ev = new FormEvent(this, name, occupation, ageCat.getIdSelected(), empCat, taxId, vnCitizen, gender);
 				
 				if(formListener != null) {
 					formListener.formEventOccured(ev);
@@ -110,7 +126,7 @@ public class FormPanel extends JPanel{
 		
 //		This form just have one column, therefore we just use weighty to allocate the space between each components
 		
-		/////////////// FIRST ROW ///////////////////
+		/////////////// NAME ///////////////////
 		gc.weighty = 0.1; // assign at least small additional space between each component on Vertical
 		
 		gc.gridx = 0;
@@ -124,7 +140,7 @@ public class FormPanel extends JPanel{
 		gc.anchor = GridBagConstraints.LINE_START;
 		add(nameField, gc);
 		
-		/////////////// SECOND ROW ///////////////////
+		/////////////// OCCUPATION ///////////////////
 		gc.gridy++;
 		gc.gridx = 0;
 		gc.anchor = GridBagConstraints.FIRST_LINE_END;
@@ -136,7 +152,7 @@ public class FormPanel extends JPanel{
 		gc.anchor = GridBagConstraints.LINE_START;
 		add(occupationField,gc);
 		
-		/////////////// THIRD ROW ///////////////////
+		/////////////// LIST BOX ///////////////////
 		gc.gridy++;
 		
 		gc.gridx = 0;
@@ -148,7 +164,7 @@ public class FormPanel extends JPanel{
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		add(ageList,gc);
 		
-		/////////////// FOURTH ROW ///////////////////
+		/////////////// COMBO BOX ///////////////////
 		gc.gridy++;
 		
 		gc.gridx = 0;
@@ -160,7 +176,7 @@ public class FormPanel extends JPanel{
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		add(empCombo,gc);
 		
-		/////////////// FIFTH ROW ///////////////////
+		/////////////// CHECK BOX ///////////////////
 		gc.gridy++;
 		
 		gc.gridx = 0;
@@ -172,7 +188,7 @@ public class FormPanel extends JPanel{
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		add(citizenCheck,gc);
 		
-		/////////////// SIXTH ROW ///////////////////
+		/////////////// TAX ID ///////////////////
 		gc.gridy++;
 		
 		gc.gridx = 0;
@@ -184,7 +200,26 @@ public class FormPanel extends JPanel{
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		add(taxField,gc);
 		
-		/////////////// SEVENTH ROW ///////////////////
+		/////////////// RADIO BUTTON ///////////////////
+		gc.gridy++;
+		gc.weighty = 0.01;
+		
+		gc.gridx = 0;
+		gc.anchor = GridBagConstraints.LAST_LINE_END;
+		gc.insets = new Insets(0, 0, 0, 5);
+		add(new JLabel("Gender: "),gc);
+		
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		add(maleRadio,gc);
+		
+		gc.gridy++;
+		
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		add(femaleRadio,gc);
+		
+		/////////////// SUBMIT BUTTON ///////////////////
 		gc.weighty = 2; //all additional space below will be distributed to this component on Vertical
 		
 		gc.gridy++;
