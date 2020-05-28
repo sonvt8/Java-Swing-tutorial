@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -9,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 
@@ -51,6 +53,7 @@ public class MainFrame extends JFrame{
 		add(toolbar, BorderLayout.NORTH);
 		add(formPanel, BorderLayout.WEST);
 		
+		setMinimumSize(new Dimension(700,600));
 		setSize(600, 500);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
@@ -95,7 +98,20 @@ public class MainFrame extends JFrame{
 		
 		exitItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.exit(0);	
+				
+				//Example of Input Dialog and method to change icon of Message
+//				JOptionPane.showInputDialog(MainFrame.this, 
+//						"Enter your user name", "User Name", 
+//						JOptionPane.OK_OPTION|JOptionPane.INFORMATION_MESSAGE);
+				
+				//using MainFrame.this to show Dialog contained in the MainFrame if no it will appear outside
+				int action = JOptionPane.showConfirmDialog(MainFrame.this, 
+						"Do you really want to exit the application", "Confirm Exit", 
+						JOptionPane.OK_CANCEL_OPTION);
+				
+				if(action == JOptionPane.OK_OPTION) {
+					System.exit(0);	
+				}
 			}
 		});
 		
