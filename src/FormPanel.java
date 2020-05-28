@@ -5,6 +5,7 @@ import java.awt.Insets;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -50,6 +51,8 @@ public class FormPanel extends JPanel{
 		maleRadio = new JRadioButton("male");
 		femaleRadio = new JRadioButton("female");
 		genderGroup = new ButtonGroup();
+		okBtn = new JButton("Submit");
+		okBtn.setMnemonic(KeyEvent.VK_S);
 		
 //		Radio Button
 		maleRadio.setSelected(true);
@@ -90,8 +93,6 @@ public class FormPanel extends JPanel{
 		empCombo.setModel(empModel);
 		empCombo.setSelectedIndex(0);
 		empCombo.setEditable(true);
-		
-		okBtn = new JButton("Submit");
 		
 		okBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
