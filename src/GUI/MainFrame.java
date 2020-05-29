@@ -1,3 +1,4 @@
+package GUI;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -46,7 +47,7 @@ public class MainFrame extends JFrame{
 			public void formEventOccured(FormEvent e) {
 				String name = e.getName();
 				String occupation = e.getOccupation();
-				int idCategory = e.getidCategory();
+				int idCategory = e.getAgeCategory();
 				String empCat = e.getEmploymentCategory();
 				
 				txtPanel.appendText(e.toString());

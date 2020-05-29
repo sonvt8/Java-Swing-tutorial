@@ -1,3 +1,4 @@
+package GUI;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -102,7 +103,6 @@ public class FormPanel extends JPanel{
 				String empCat = (String) empCombo.getSelectedItem();
 				String taxId = taxField.getText();
 				boolean vnCitizen = citizenCheck.isSelected();
-				
 				String gender = genderGroup.getSelection().getActionCommand();
 			
 				var ev = new FormEvent(this, name, occupation, ageCat.getIdSelected(), empCat, taxId, vnCitizen, gender);

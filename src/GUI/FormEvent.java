@@ -1,10 +1,11 @@
+package GUI;
 import java.util.EventObject;
 
 public class FormEvent extends EventObject {
 	
 	private String name;
 	private String occupation;
-	private int idCategory;
+	private int ageCategory;
 	private String empCat;
 	private String taxID;
 	private boolean vnCitizen;
@@ -14,12 +15,12 @@ public class FormEvent extends EventObject {
 		super(source);
 	}
 
-	public FormEvent(Object source, String name, String occupation, int idCategory, String empCat, String taxID,
+	public FormEvent(Object source, String name, String occupation, int ageCategory, String empCat, String taxID,
 			boolean vnCitizen, String gender) {
 		super(source);
 		this.name = name;
 		this.occupation = occupation;
-		this.idCategory = idCategory;
+		this.ageCategory = ageCategory;
 		this.empCat = empCat;
 		this.taxID = taxID;
 		this.vnCitizen = vnCitizen;
@@ -55,8 +56,8 @@ public class FormEvent extends EventObject {
 		this.occupation = occupation;
 	}
 	
-	public int getidCategory() {
-		return idCategory;
+	public int getAgeCategory() {
+		return ageCategory;
 	}
 	
 	public String getEmploymentCategory() {
@@ -65,7 +66,7 @@ public class FormEvent extends EventObject {
 
 	@Override
 	public String toString() {
-		return "FormEvent [name=" + name + ", occupation=" + occupation + ", idCategory=" + idCategory + ", empCat="
+		return "FormEvent [name=" + name + ", occupation=" + occupation + ", idCategory=" + ageCategory + ", empCat="
 				+ empCat + ", taxID=" + taxID + ", vnCitizen=" + vnCitizen + "]\n";
 	}
 	
