@@ -16,12 +16,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 
+import Controller.Controller;
+
 public class MainFrame extends JFrame{
 	
 	private TextPanel txtPanel;
 	private Toolbar toolbar;
 	private FormPanel formPanel;
 	private JFileChooser fileChooser;
+	private Controller controller;
 	
 	public MainFrame() {
 		super("Hello World");
@@ -34,6 +37,8 @@ public class MainFrame extends JFrame{
 		fileChooser = new JFileChooser();
 		fileChooser.addChoosableFileFilter(new PersonFileFilter());
 		
+		controller = new Controller();
+		
 		setJMenuBar(createMenuBar());
 		
 		toolbar.setStringListener(new StringListener() {
@@ -45,12 +50,7 @@ public class MainFrame extends JFrame{
 		
 		formPanel.setFormListener(new FormListener() {
 			public void formEventOccured(FormEvent e) {
-				String name = e.getName();
-				String occupation = e.getOccupation();
-				int idCategory = e.getAgeCategory();
-				String empCat = e.getEmploymentCategory();
-				
-				txtPanel.appendText(e.toString());
+				controller.addPerson(e);
 			}
 		});
 		
