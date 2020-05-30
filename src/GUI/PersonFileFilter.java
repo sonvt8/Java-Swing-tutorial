@@ -29,5 +29,4 @@ public class PersonFileFilter extends FileFilter {
 	public String getDescription() {
 		return "Person database files (*.per)";
 	}
-	
 }
