@@ -1,5 +1,7 @@
 package Controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import GUI.FormEvent;
@@ -62,5 +64,13 @@ public class Controller {
 		
 		Person person = new Person(name, occupation, ageCategory, empCategory, taxID, isVn, genderCat);
 		db.addPerson(person);
+	}
+	
+	public void saveToFile(File f) throws IOException {
+		db.saveToFile(f);
+	}
+	
+	public void loadFromFile(File f) throws IOException {
+		db.loadFromFile(f);
 	}
 }
