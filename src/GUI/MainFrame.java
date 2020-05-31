@@ -43,6 +43,12 @@ public class MainFrame extends JFrame{
 		
 		tablePanel.setData(controller.getPeople());
 		
+		tablePanel.setPersonTableListener(new PersonTableListener() {
+			public void rowDeleted(int row) {
+				controller.removePerson(row);
+			}
+		});
+		
 		setJMenuBar(createMenuBar());
 		
 		toolbar.setStringListener(new StringListener() {
@@ -107,6 +113,7 @@ public class MainFrame extends JFrame{
 		exitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.CTRL_MASK));
 		
 		importDataItem.setMnemonic(KeyEvent.VK_I);
+		importDataItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, ActionEvent.CTRL_MASK));
 		importDataItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(fileChooser.showOpenDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {

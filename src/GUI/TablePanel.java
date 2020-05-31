@@ -1,6 +1,8 @@
 package GUI;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -18,6 +20,7 @@ public class TablePanel extends JPanel {
 	private JTable table;
 	private PersonTableModel tableModel;
 	private JPopupMenu popup;
+	private PersonTableListener personTableListen;
 	
 	public TablePanel() {
 		tableModel = new PersonTableModel();
@@ -29,12 +32,27 @@ public class TablePanel extends JPanel {
 		
 		table.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
+				int row = table.rowAtPoint(e.getPoint());
+				table.getSelectionModel().setSelectionInterval(row, row);
+				
 				if(e.getButton() == MouseEvent.BUTTON3) {
 					//When right click on the row of table, the pop up will be showed up
 					popup.show(table, e.getX(), e.getY());
 				}
 			}
 			
+		});
+		
+		removeItem.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				int row = table.getSelectedRow(); //Start from 0
+				if(personTableListen != null) {
+					personTableListen.rowDeleted(row);
+					tableModel.fireTableRowsDeleted(row, row);
+				}
+				
+			}
 		});
 		
 		setLayout(new BorderLayout());
@@ -48,5 +66,9 @@ public class TablePanel extends JPanel {
 	
 	public void refresh() {
 		tableModel.fireTableDataChanged();
+	}
+	
+	public void setPersonTableListener(PersonTableListener listener) {
+		this.personTableListen = listener;
 	}
 }

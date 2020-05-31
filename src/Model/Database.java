@@ -8,15 +8,18 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.imageio.stream.FileImageInputStream;
 
 public class Database {
-	private ArrayList<Person> people;
+	private LinkedList<Person> people;
 	
 	public Database() {
-		people = new ArrayList<Person>();
+		people = new LinkedList<Person>();
 	}
 	
 	public void addPerson(Person person) {
@@ -24,7 +27,7 @@ public class Database {
 	}
 	
 	public List<Person> getPeople(){
-		return people;
+		return Collections.unmodifiableList(people) ;
 	}
 	
 	public void saveToFile(File file) throws IOException {
@@ -51,5 +54,9 @@ public class Database {
 			// TODO: handle exception
 		}
 		ois.close();
+	}
+	
+	public void removePerson(int index) {
+		people.remove(index);
 	}
 }
