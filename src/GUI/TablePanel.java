@@ -44,14 +44,12 @@ public class TablePanel extends JPanel {
 		});
 		
 		removeItem.addActionListener(new ActionListener() {
-
 			public void actionPerformed(ActionEvent e) {
 				int row = table.getSelectedRow(); //Start from 0
 				if(personTableListen != null) {
 					personTableListen.rowDeleted(row);
 					tableModel.fireTableRowsDeleted(row, row);
 				}
-				
 			}
 		});
 		
