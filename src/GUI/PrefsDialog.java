@@ -6,6 +6,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.print.attribute.standard.PresentationDirection;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -22,6 +23,7 @@ public class PrefsDialog extends JDialog {
 	private SpinnerNumberModel spinnerModel;
 	private JTextField userField;
 	private JPasswordField passField;
+	private PrefsListener prefsListener;
 	
 	public PrefsDialog(JFrame frame) {
 		super(frame, "Preferences", false);
@@ -90,11 +92,14 @@ public class PrefsDialog extends JDialog {
 		
 		okBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Integer value = (Integer) portSpinner.getValue();
+				Integer port = (Integer) portSpinner.getValue();
 				String user = userField.getText();
 				char[] pass = passField.getPassword();
 				
-				System.out.println(user + "/" + new String(pass) + "/" +value);
+				if(prefsListener != null) {
+					prefsListener.preferencesSet(user, new String(pass), port);
+				}
+				
 				setVisible(false);
 			}
 		});
@@ -105,7 +110,17 @@ public class PrefsDialog extends JDialog {
 			}
 		});
 		
-		setSize(400, 300);
+		setSize(350, 250);
 		setLocationRelativeTo(frame);
+	}
+	
+	public void setDefaults (String user, String pass, int port) {
+		userField.setText(user);
+		passField.setText(pass);
+		portSpinner.setValue(port);
+	}
+	
+	public void setPrefsListener(PrefsListener prefsListener) {
+		this.prefsListener = prefsListener;
 	}
 }
