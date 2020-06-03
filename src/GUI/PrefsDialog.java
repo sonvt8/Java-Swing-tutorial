@@ -10,7 +10,9 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPasswordField;
 import javax.swing.JSpinner;
+import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 public class PrefsDialog extends JDialog {
@@ -18,6 +20,8 @@ public class PrefsDialog extends JDialog {
 	private JButton cancelBtn;
 	private JSpinner portSpinner;
 	private SpinnerNumberModel spinnerModel;
+	private JTextField userField;
+	private JPasswordField passField;
 	
 	public PrefsDialog(JFrame frame) {
 		super(frame, "Preferences", false);
@@ -28,31 +32,56 @@ public class PrefsDialog extends JDialog {
 		spinnerModel = new SpinnerNumberModel(3306,0,9999,1);
 		portSpinner = new JSpinner(spinnerModel);
 		
+		userField = new JTextField(20);
+		passField = new JPasswordField(20);
+		
+		passField.setEchoChar('*');
+		
 		setLayout(new GridBagLayout());
 		
 		GridBagConstraints gc = new GridBagConstraints();
 		
+		////////////FIRST ROW /////////////////
 		gc.gridy = 0;
-//		gc.weightx = 1;
 		gc.weighty = 0.5;
 		gc.fill = GridBagConstraints.NONE;
 		
 		gc.gridx = 0;
 		gc.anchor = GridBagConstraints.LAST_LINE_END;
 		gc.insets = new Insets(0, 0, 15, 15);
-		add(new JLabel("Port: "), gc);
+		add(new JLabel("User: "), gc);
 		
 		
 		gc.gridx++;
 		gc.anchor = GridBagConstraints.LAST_LINE_START;
+		add(userField, gc);
+		
+		////////////NEXT ROW /////////////////
+		gc.gridy++;
+		gc.gridx = 0;
+		gc.anchor = GridBagConstraints.LINE_END;
+		add(new JLabel("Password: "), gc);
+		
+		gc.gridx++;
+		gc.anchor = GridBagConstraints.LINE_START;
+		add(passField, gc);
+		
+		////////////NEXT ROW /////////////////
+		gc.gridy++;
+		gc.gridx = 0;
+		gc.anchor = GridBagConstraints.FIRST_LINE_END;
+		add(new JLabel("Port: "), gc);
+		
+		gc.gridx++;
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		add(portSpinner, gc);
 		
 		
 		//////////// NEXT ROW /////////////////
-		gc.weighty = 0.5;
+		gc.weighty = 2;
 		gc.gridy++;
 		gc.gridx = 0;
-		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		gc.anchor = GridBagConstraints.FIRST_LINE_END;
 		add(okBtn,gc);
 		
 		gc.gridx++;
@@ -62,7 +91,10 @@ public class PrefsDialog extends JDialog {
 		okBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Integer value = (Integer) portSpinner.getValue();
-				System.out.println(value);
+				String user = userField.getText();
+				char[] pass = passField.getPassword();
+				
+				System.out.println(user + "/" + new String(pass) + "/" +value);
 				setVisible(false);
 			}
 		});
@@ -73,7 +105,7 @@ public class PrefsDialog extends JDialog {
 			}
 		});
 		
-		setSize(250, 200);
+		setSize(400, 300);
 		setLocationRelativeTo(frame);
 	}
 }
