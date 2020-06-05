@@ -6,6 +6,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -18,8 +21,25 @@ import javax.imageio.stream.FileImageInputStream;
 public class Database {
 	private LinkedList<Person> people;
 	
+	private Connection con;
+	
 	public Database() {
 		people = new LinkedList<Person>();
+	}
+	
+	public void connect() {
+		String strConn = "jdbc:sqlserver://DESKTOP-HEPHQND\\SQLEXPRESS:1433; databaseName=C1903LBUOI7; user=sa; password=abc123@@@;";
+		
+
+		try (
+				Connection cnn = DriverManager.getConnection(strConn);
+				Statement stmt = cnn.createStatement();
+			)
+		{
+			System.out.println("Success");
+		}catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	public void addPerson(Person person) {
