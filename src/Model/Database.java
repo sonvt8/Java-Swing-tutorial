@@ -8,38 +8,92 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.imageio.stream.FileImageInputStream;
-
 public class Database {
 	private LinkedList<Person> people;
 	
-	private Connection con;
+	private Connection cnn;
 	
 	public Database() {
 		people = new LinkedList<Person>();
 	}
 	
 	public void connect() {
-		String strConn = "jdbc:sqlserver://DESKTOP-HEPHQND\\SQLEXPRESS:1433; databaseName=C1903LBUOI7; user=sa; password=abc123@@@;";
+		if(cnn != null) return;
 		
-
-		try (
-				Connection cnn = DriverManager.getConnection(strConn);
-				Statement stmt = cnn.createStatement();
-			)
+		String strConn = "jdbc:sqlserver://DESKTOP-HEPHQND\\SQLEXPRESS:1433; databaseName=JavaSwingTutorial; user=sa; password=abc123@@@;";
+		try 
 		{
-			System.out.println("Success");
+			cnn = DriverManager.getConnection(strConn);
+			Statement stmt = cnn.createStatement();
+			System.out.println("Connect to database successfully");
 		}catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
+	}
+	
+	public void disconnect() {
+		if(cnn != null) {
+			try {
+				cnn.close();
+			} catch (SQLException e) {
+				System.out.println("Can't close connection");
+			}
+		}
+	}
+	
+	public void save() throws SQLException {
+		String checkSql = "select count(*) as count from people where id=?";
+		PreparedStatement checkStmt = cnn.prepareStatement(checkSql);
+		
+		String insertSQL = "insert into people(id,name,age,employment_status,tax_id,vn_citizen,gender,occupation) values (?,?,?,?,?,?,?,?)";
+		PreparedStatement inserStm = cnn.prepareStatement(insertSQL);
+		
+		for(Person person: people) {
+			int id  = person.getId();
+			String name = person.getName();
+			String job = person.getOccupation();
+			AgeCategory age = person.getAgeCategory();
+			EmploymentCategory emp = person.getEmpCat();
+			String tax = person.getTaxID();
+			boolean isVn = person.isVnCitizen();
+			Gender gender = person.getGender();
+			
+			checkStmt.setInt(1, id);
+			ResultSet rs = checkStmt.executeQuery();
+			rs.next();
+			
+			int count = rs.getInt(1);
+			
+			if(count == 0) {
+				System.out.println("Inserting person with ID " + id);
+				
+				int col = 1;
+				inserStm.setInt(col++, id);
+				inserStm.setString(col++, name);
+				inserStm.setString(col++, age.name());
+				inserStm.setString(col++, emp.name());
+				inserStm.setString(col++, tax);
+				inserStm.setBoolean(col++, isVn);
+				inserStm.setString(col++, gender.name());
+				inserStm.setString(col++, job);
+				
+				inserStm.executeUpdate();
+			}else {
+				System.out.println("Updating person with ID " + id);
+			}
+		}
+		
+		checkStmt.close();
+		inserStm.close();
 	}
 	
 	public void addPerson(Person person) {

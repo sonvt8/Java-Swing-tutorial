@@ -2,7 +2,7 @@ package Model;
 
 public enum EmploymentCategory {
 	employed,
-	selfemployed,
+	selfEmployed,
 	unemployed,
 	other
 }

@@ -46,7 +46,7 @@ public class Controller {
 		if(empCat.equals("employed")) {
 			empCategory = EmploymentCategory.employed;
 		}else if(empCat.equals("self-employed")) {
-			empCategory = EmploymentCategory.selfemployed;
+			empCategory = EmploymentCategory.selfEmployed;
 		}else if(empCat.equals("self-employed")) {
 			empCategory = EmploymentCategory.unemployed;
 		}else {
