@@ -8,27 +8,33 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JToolBar;
 
-public class Toolbar extends JPanel implements ActionListener{
+public class Toolbar extends JToolBar implements ActionListener{
 	private JButton saveButton;
 	private JButton refreshButton;
 	private ToolbarListener txtListener;
 	
 	public Toolbar() {
+		
+//		Get rid of the border if you want the toolbar draggable
 		setBorder(BorderFactory.createEtchedBorder());
 		
-		saveButton 	= new JButton("Save");
-		refreshButton 	= new JButton("Refresh");
+		saveButton 	= new JButton();
+		refreshButton 	= new JButton();
 		
 		saveButton.addActionListener(this);
 		saveButton.setIcon(createIcon("/images/save.png"));
+		saveButton.setToolTipText("Save");
 		
 		refreshButton.addActionListener(this);
 		refreshButton.setIcon(createIcon("/images/refresh.png"));
+		refreshButton.setToolTipText("Refresh");
 		
 		setLayout(new FlowLayout(FlowLayout.LEFT));
 		
 		add(saveButton);
+//		addSeparator();
 		add(refreshButton);
 	}
 	

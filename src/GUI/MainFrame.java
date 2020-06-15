@@ -119,7 +119,7 @@ public class MainFrame extends JFrame{
 		});
 		
 		add(tablePanel, BorderLayout.CENTER);
-		add(toolbar, BorderLayout.NORTH);
+		add(toolbar, BorderLayout.PAGE_START);
 		add(formPanel, BorderLayout.WEST);
 		
 		setMinimumSize(new Dimension(700,600));
