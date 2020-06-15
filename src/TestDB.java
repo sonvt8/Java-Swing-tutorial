@@ -22,6 +22,13 @@ public class TestDB {
 			e.printStackTrace();
 		}
 		
+		try {
+			db.load();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		db.disconnect();
 	}
 

@@ -2,6 +2,7 @@ package Controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 import GUI.FormEvent;
@@ -64,6 +65,22 @@ public class Controller {
 		
 		Person person = new Person(name, occupation, ageCategory, empCategory, taxID, isVn, genderCat);
 		db.addPerson(person);
+	}
+	
+	public void save() throws SQLException {
+		db.save();
+	}
+	
+	public void close() {
+		db.disconnect();
+	}
+	
+	public void connect() throws Exception{
+		db.connect();
+	}
+	
+	public void load() throws SQLException{
+		db.load();
 	}
 	
 	public void saveToFile(File f) throws IOException {

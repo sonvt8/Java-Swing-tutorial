@@ -109,6 +109,33 @@ public class Database {
 		
 		checkStmt.close();
 		inserStm.close();
+		updateStm.close();
+	}
+	
+	public void load() throws SQLException {
+		people.clear();
+		
+		String sql = "select * from people order by name desc";
+		Statement selectStm = cnn.createStatement();
+		
+		ResultSet rs = selectStm.executeQuery(sql);
+		
+		while (rs.next()) {
+			int id = rs.getInt("id");
+			String name = rs.getString("name");
+			String age = rs.getString("age");
+			String emp = rs.getString("employment_status");
+			String tax = rs.getString("tax_id");
+			Boolean isVn = rs.getBoolean("vn_citizen");
+			String gender = rs.getString("gender");
+			String job = rs.getString("occupation");
+			
+			people.add(new Person(id, name, job, AgeCategory.valueOf(age), EmploymentCategory.valueOf(emp), tax, isVn, Gender.valueOf(gender)));
+		}
+		
+		selectStm.executeQuery(sql);
+		
+		selectStm.close();
 	}
 	
 	public void addPerson(Person person) {

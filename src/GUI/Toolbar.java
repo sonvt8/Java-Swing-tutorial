@@ -8,40 +8,40 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 public class Toolbar extends JPanel implements ActionListener{
-	private JButton helloButton;
-	private JButton goodbyeButton;
-	private StringListener txtListener;
+	private JButton saveButton;
+	private JButton refreshButton;
+	private ToolbarListener txtListener;
 	
 	public Toolbar() {
 		setBorder(BorderFactory.createEtchedBorder());
 		
-		helloButton 	= new JButton("Hello");
-		goodbyeButton 	= new JButton("Goodbye");
+		saveButton 	= new JButton("Save");
+		refreshButton 	= new JButton("Refresh");
 		
-		helloButton.addActionListener(this);
+		saveButton.addActionListener(this);
 		
-		goodbyeButton.addActionListener(this);
+		refreshButton.addActionListener(this);
 		
 		setLayout(new FlowLayout(FlowLayout.LEFT));
 		
-		add(helloButton);
-		add(goodbyeButton);
+		add(saveButton);
+		add(refreshButton);
 	}
 	
-	public void setStringListener (StringListener txtListener){
+	public void setToolbarListener (ToolbarListener txtListener){
 		this.txtListener = txtListener;
 	}
 	
 	public void actionPerformed(ActionEvent e) {
 		var clicked = e.getSource();
 		
-		if(clicked == helloButton) {
+		if(clicked == saveButton) {
 			if(txtListener != null) {
-				txtListener.textEmmited("Hello\n");
+				txtListener.saveEventOccured();
 			}
-		}else {
+		}else if (clicked == refreshButton){
 			if(txtListener != null) {
-				txtListener.textEmmited("Goodbye\n");
+				txtListener.refreshEventOccured();
 			}
 		}
 	}

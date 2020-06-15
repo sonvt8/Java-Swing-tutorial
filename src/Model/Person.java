@@ -30,6 +30,13 @@ public class Person implements Serializable{
 		count++;
 	}
 	
+	public Person(int id, String name, String occupation, AgeCategory ageCategory, EmploymentCategory empCat,
+			String taxID, boolean vnCitizen, Gender gender) {
+		this(name, occupation, ageCategory, empCat, taxID, vnCitizen, gender);
+		
+		this.id = id;
+	}
+	
 	public int getId() {
 		return id;
 	}
