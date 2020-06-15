@@ -71,7 +71,7 @@ public class Controller {
 		db.save();
 	}
 	
-	public void close() {
+	public void disconnect() {
 		db.disconnect();
 	}
 	
