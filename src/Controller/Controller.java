@@ -52,7 +52,6 @@ public class Controller {
 			empCategory = EmploymentCategory.unemployed;
 		}else {
 			empCategory = EmploymentCategory.other;
-			System.err.println(empCat);
 		}
 		
 		Gender genderCat;
