@@ -1,13 +1,16 @@
 package GUI;
 
 import java.awt.BorderLayout;
+import java.net.URL;
 
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeSelectionModel;
 
 class ServerInfo {
@@ -44,9 +47,17 @@ class ServerInfo {
 
 public class MessagePanel extends JPanel {
 	private JTree serverTree;
+	private DefaultTreeCellRenderer treeCellRenderer;
 	
 	public MessagePanel() {
+		treeCellRenderer = new DefaultTreeCellRenderer();
+		
+		treeCellRenderer.setLeafIcon(createIcon("/images/server.png"));
+		treeCellRenderer.setOpenIcon(createIcon("/images/global.png"));
+		treeCellRenderer.setClosedIcon(createIcon("/images/earth.png"));
+		
 		serverTree = new JTree(creatTree());
+		serverTree.setCellRenderer(treeCellRenderer);
 		
 		serverTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		
@@ -84,5 +95,15 @@ public class MessagePanel extends JPanel {
 		top.add(branch2);
 		
 		return top;
+	}
+	
+	private ImageIcon createIcon(String path) {
+		URL url = getClass().getResource(path);
+		
+		if(url == null) {
+			System.err.println("Unable to load image: " + path);
+		}
+		ImageIcon icon = new ImageIcon(url);
+		return icon;
 	}
 }

@@ -38,16 +38,6 @@ public class Toolbar extends JToolBar implements ActionListener{
 		add(refreshButton);
 	}
 	
-	private ImageIcon createIcon(String path) {
-		URL url = getClass().getResource(path);
-		
-		if(url == null) {
-			System.err.println("Unable to load image: " + path);
-		}
-		ImageIcon icon = new ImageIcon(url);
-		return icon;
-	}
-	
 	public void actionPerformed(ActionEvent e) {
 		var clicked = e.getSource();
 		
@@ -60,6 +50,16 @@ public class Toolbar extends JToolBar implements ActionListener{
 				txtListener.refreshEventOccured();
 			}
 		}
+	}
+	
+	private ImageIcon createIcon(String path) {
+		URL url = getClass().getResource(path);
+		
+		if(url == null) {
+			System.err.println("Unable to load image: " + path);
+		}
+		ImageIcon icon = new ImageIcon(url);
+		return icon;
 	}
 	
 	public void setToolbarListener (ToolbarListener txtListener){
