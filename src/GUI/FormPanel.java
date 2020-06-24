@@ -133,7 +133,7 @@ public class FormPanel extends JPanel{
 		
 		gc.gridx = 0;
 		gc.gridy = 0;
-		gc.anchor = GridBagConstraints.FIRST_LINE_END;
+		gc.anchor = GridBagConstraints.LINE_END;
 		gc.insets = new Insets(0, 0, 0, 5);
 		add(new JLabel("Name: "),gc);
 		
@@ -145,7 +145,7 @@ public class FormPanel extends JPanel{
 		/////////////// OCCUPATION ///////////////////
 		gc.gridy++;
 		gc.gridx = 0;
-		gc.anchor = GridBagConstraints.FIRST_LINE_END;
+		gc.anchor = GridBagConstraints.LINE_END;
 		gc.insets = new Insets(0, 0, 0, 5);
 		add(new JLabel("Occupation: "),gc);
 		
